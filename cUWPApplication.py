@@ -29,8 +29,8 @@ class cUWPApplication(object):
     for sLine in asQueryOutput:
       if sLine:
         oNameAndValueMatch = re.match(r"^(.*?)\s* : (.*)$", sLine);
-        assert oNameAndValueMatch, \
-            "Unrecognized Get-AppxPackage output: %s\r\n%s" % (repr(sLine), "\r\n".join(asQueryOutput));
+        if oNameAndValueMatch is None:
+          continue
         sName, sValue = oNameAndValueMatch.groups();
         if sName == "Name":
           assert sValue.lower() == oUWPApplication.sPackageName.lower(), \
